@@ -6,10 +6,10 @@ public class BankAccount {
         this.balance = startingBalance;
     }
     public boolean withdraw(int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount cannot be negative");
+        }
         if(balance >= amount) {
-            if (amount < 0) {
-                throw new IllegalArgumentException("Amount cannot be negative");
-            }
             balance -= amount;
             return true;
         }
