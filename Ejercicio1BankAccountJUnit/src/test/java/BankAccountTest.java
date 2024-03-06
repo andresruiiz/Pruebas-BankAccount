@@ -56,6 +56,20 @@ public class BankAccountTest {
     }
 
     @Test
+    @DisplayName("Test withdraw with balance amount")
+    public void testWithdrawWithBalanceAmount() {
+        // Arrange
+        int withdrawalAmount = 100;
+
+        // Act
+        boolean result = bankAccount.withdraw(withdrawalAmount);
+
+        // Assert
+        assertTrue(result);
+        assertEquals(0, bankAccount.getBalance());
+    }
+
+    @Test
     @DisplayName("Test withdraw with negative amount")
     public void testWithdrawWithNegativeAmount() {
         // Arrange
@@ -98,6 +112,20 @@ public class BankAccountTest {
     }
 
     @Test
+    @DisplayName("Test deposit with 0")
+    public void testDepositWithZero() {
+        // Arrange
+        int depositAmount = 0;
+
+        // Act
+        int newBalance = bankAccount.deposit(depositAmount);
+
+        // Assert
+        assertEquals(100, newBalance);
+        assertEquals(100, bankAccount.getBalance());
+    }
+
+    @Test
     @DisplayName("Test payment calculation")
     public void testPaymentCalculation() {
         // Arrange
@@ -128,5 +156,19 @@ public class BankAccountTest {
         assertEquals(8415.139347565333, pendingAmount, 0.01);
     }
 
-    
+    @Test
+    @DisplayName("Test pending amount calculation with month 0")
+    public void testPendingAmountCalculationWithMonth0() {
+        // Arrange
+        double amount = 10000;
+        double interest = 0.01;
+        int npayments = 12;
+        int month = 0;
+
+        // Act
+        double pendingAmount = bankAccount.pending(amount, interest, npayments, month);
+
+        // Assert
+        assertEquals(10000, pendingAmount, 0.01);
+    }
 }
