@@ -7,6 +7,9 @@ public class BankAccount {
     }
     public boolean withdraw(int amount) {
         if(balance >= amount) {
+            if (amount < 0) {
+                throw new IllegalArgumentException("Amount cannot be negative");
+            }
             balance -= amount;
             return true;
         }

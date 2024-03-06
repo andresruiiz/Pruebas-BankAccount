@@ -96,4 +96,37 @@ public class BankAccountTest {
         assertThrows(IllegalArgumentException.class, executable);
         assertEquals(100, bankAccount.getBalance());
     }
+
+    @Test
+    @DisplayName("Test payment calculation")
+    public void testPaymentCalculation() {
+        // Arrange
+        double totalAmount = 10000;
+        double interest = 0.05;
+        int npayments = 12;
+
+        // Act
+        double payment = bankAccount.payment(totalAmount, interest, npayments);
+
+        // Assert
+        assertEquals(1128.2541002081534, payment, 0.01);
+    }
+
+    @Test
+    @DisplayName("Test pending amount calculation")
+    public void testPendingAmountCalculation() {
+        // Arrange
+        double amount = 10000;
+        double interest = 0.05;
+        int npayments = 12;
+        int month = 6;
+
+        // Act
+        double pendingAmount = bankAccount.pending(amount, interest, npayments, month);
+
+        // Assert
+        assertEquals(5726.670386288504, pendingAmount, 0.01);
+    }
+
+    
 }
