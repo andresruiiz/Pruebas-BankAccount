@@ -27,19 +27,34 @@ public class BankAccount {
 
     // Calculate the payment per month for a loan
     public double payment(double total_amount, double interest, int npayments){
-<span class="fc" id="L30">        return total_amount*(interest*Math.pow((1+interest), npayments)/(Math.pow((1+interest), npayments)-1));</span>
+<span class="fc bfc" id="L30" title="All 6 branches covered.">        if (total_amount &lt; 0 || interest &lt; 0 || npayments &lt;= 0) {</span>
+<span class="fc" id="L31">            throw new IllegalArgumentException(&quot;Total amount, interest, and number of payments cannot be negative&quot;);</span>
+        }
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        if (interest &gt;= 1) {</span>
+<span class="fc" id="L34">            throw new IllegalArgumentException(&quot;Interest must be less than 1&quot;);</span>
+        }
+<span class="fc" id="L36">        return total_amount*(interest*Math.pow((1+interest), npayments)/(Math.pow((1+interest), npayments)-1));</span>
     }
 
     // Calculate the pending amount for a loan in a month
     public double pending (double amount, double inte, int npayments, int month){
-        double res;
-<span class="fc bfc" id="L36" title="All 2 branches covered.">        if(month==0){</span>
-<span class="fc" id="L37">            res=amount;</span>
-<span class="fc" id="L38">        }else{</span>
-<span class="fc" id="L39">            double ant=pending(amount, inte, npayments, month-1);</span>
-<span class="fc" id="L40">            res = ant - (payment(amount,inte,npayments) - inte*ant);</span>
+<span class="fc bfc" id="L41" title="All 8 branches covered.">        if (amount &lt; 0 || inte &lt; 0 || npayments &lt;= 0 || month &lt; 0) {</span>
+<span class="fc" id="L42">            throw new IllegalArgumentException(&quot;Amount, interest, number of payments, and month cannot be negative&quot;);</span>
         }
-<span class="fc" id="L42">        return res;</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (inte &gt;= 1) {</span>
+<span class="fc" id="L45">            throw new IllegalArgumentException(&quot;Interest must be less than 1&quot;);</span>
+        }
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (month &gt; npayments) {</span>
+<span class="fc" id="L48">            throw new IllegalArgumentException(&quot;Month cannot be greater than number of payments&quot;);</span>
+        }
+        double res;
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if(month==0){</span>
+<span class="fc" id="L52">            res=amount;</span>
+<span class="fc" id="L53">        }else{</span>
+<span class="fc" id="L54">            double ant=pending(amount, inte, npayments, month-1);</span>
+<span class="fc" id="L55">            res = ant - (payment(amount,inte,npayments) - inte*ant);</span>
+        }
+<span class="fc" id="L57">        return res;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
