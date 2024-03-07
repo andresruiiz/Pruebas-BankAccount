@@ -27,11 +27,26 @@ public class BankAccount {
 
     // Calculate the payment per month for a loan
     public double payment(double total_amount, double interest, int npayments){
+        if (total_amount < 0 || interest < 0 || npayments <= 0) {
+            throw new IllegalArgumentException("Total amount, interest, and number of payments cannot be negative");
+        }
+        if (interest >= 1) {
+            throw new IllegalArgumentException("Interest must be less than 1");
+        }
         return total_amount*(interest*Math.pow((1+interest), npayments)/(Math.pow((1+interest), npayments)-1));
     }
 
     // Calculate the pending amount for a loan in a month
     public double pending (double amount, double inte, int npayments, int month){
+        if (amount < 0 || inte < 0 || npayments <= 0 || month < 0) {
+            throw new IllegalArgumentException("Amount, interest, number of payments, and month cannot be negative");
+        }
+        if (inte >= 1) {
+            throw new IllegalArgumentException("Interest must be less than 1");
+        }
+        if (month > npayments) {
+            throw new IllegalArgumentException("Month cannot be greater than number of payments");
+        }
         double res;
         if(month==0){
             res=amount;
