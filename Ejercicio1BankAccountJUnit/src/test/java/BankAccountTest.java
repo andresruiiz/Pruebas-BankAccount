@@ -141,6 +141,66 @@ public class BankAccountTest {
     }
 
     @Test
+    @DisplayName("Test payment calculation with negative total amount")
+    public void testPaymentCalculationWithNegativeTotalAmount() {
+        // Arrange
+        double totalAmount = -10000;
+        double interest = 0.01;
+        int npayments = 12;
+
+        // Act
+        Executable executable = () -> bankAccount.payment(totalAmount, interest, npayments);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, executable);
+    }
+
+    @Test
+    @DisplayName("Test payment calculation with negative interest")
+    public void testPaymentCalculationWithNegativeInterest() {
+        // Arrange
+        double totalAmount = 10000;
+        double interest = -0.01;
+        int npayments = 12;
+
+        // Act
+        Executable executable = () -> bankAccount.payment(totalAmount, interest, npayments);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, executable);
+    }
+
+    @Test
+    @DisplayName("Test payment calculation with negative number of payments")
+    public void testPaymentCalculationWithNegativeNumberOfPayments() {
+        // Arrange
+        double totalAmount = 10000;
+        double interest = 0.01;
+        int npayments = -12;
+
+        // Act
+        Executable executable = () -> bankAccount.payment(totalAmount, interest, npayments);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, executable);
+    }
+
+    @Test 
+    @DisplayName("Test payment calculation with interest greater than 1")
+    public void testPaymentCalculationWithInterestGreaterThan1() {
+        // Arrange
+        double totalAmount = 10000;
+        double interest = 1.01;
+        int npayments = 12;
+
+        // Act
+        Executable executable = () -> bankAccount.payment(totalAmount, interest, npayments);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, executable);
+    }
+
+    @Test
     @DisplayName("Test pending amount calculation")
     public void testPendingAmountCalculation() {
         // Arrange
@@ -158,7 +218,7 @@ public class BankAccountTest {
 
     @Test
     @DisplayName("Test pending amount calculation with month 0")
-    public void testPendingAmountCalculationWithMonth0() {
+    public void testPendingAmountCalculationWithMonthZero() {
         // Arrange
         double amount = 10000;
         double interest = 0.01;
@@ -170,5 +230,101 @@ public class BankAccountTest {
 
         // Assert
         assertEquals(10000, pendingAmount, 0.01);
+    }
+
+    @Test
+    @DisplayName("Test pending amount calculation with negative amount")
+    public void testPendingAmountCalculationWithNegativeAmount() {
+        // Arrange
+        double amount = -10000;
+        double interest = 0.01;
+        int npayments = 12;
+        int month = 2;
+
+        // Act
+        Executable executable = () -> bankAccount.pending(amount, interest, npayments, month);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, executable);
+    }
+
+    @Test
+    @DisplayName("Test pending amount calculation with negative interest")
+    public void testPendingAmountCalculationWithNegativeInterest() {
+        // Arrange
+        double amount = 10000;
+        double interest = -0.01;
+        int npayments = 12;
+        int month = 2;
+
+        // Act
+        Executable executable = () -> bankAccount.pending(amount, interest, npayments, month);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, executable);
+    }
+
+    @Test
+    @DisplayName("Test pending amount calculation with negative number of payments")
+    public void testPendingAmountCalculationWithNegativeNumberOfPayments() {
+        // Arrange
+        double amount = 10000;
+        double interest = 0.01;
+        int npayments = -12;
+        int month = 2;
+
+        // Act
+        Executable executable = () -> bankAccount.pending(amount, interest, npayments, month);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, executable);
+    }
+
+    @Test
+    @DisplayName("Test pending amount calculation with negative month")
+    public void testPendingAmountCalculationWithNegativeMonth() {
+        // Arrange
+        double amount = 10000;
+        double interest = 0.01;
+        int npayments = 12;
+        int month = -2;
+
+        // Act
+        Executable executable = () -> bankAccount.pending(amount, interest, npayments, month);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, executable);
+    }
+
+    @Test
+    @DisplayName("Test pending amount calculation with interest greater than 1")
+    public void testPendingAmountCalculationWithInterestGreaterThan1() {
+        // Arrange
+        double amount = 10000;
+        double interest = 1.01;
+        int npayments = 12;
+        int month = 2;
+
+        // Act
+        Executable executable = () -> bankAccount.pending(amount, interest, npayments, month);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, executable);
+    }
+
+    @Test
+    @DisplayName("Test pending amount calculation with month greater than number of payments")
+    public void testPendingAmountCalculationWithMonthGreaterThanNumberOfPayments() {
+        // Arrange
+        double amount = 10000;
+        double interest = 0.01;
+        int npayments = 12;
+        int month = 13;
+
+        // Act
+        Executable executable = () -> bankAccount.pending(amount, interest, npayments, month);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, executable);
     }
 }
